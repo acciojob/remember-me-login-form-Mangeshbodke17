@@ -8,15 +8,16 @@
 	<form id="loginForm">
 		<h1>Login Form</h1>
 
-		<input type="text" placeholder="Username" id="username" required>
-		<input type="password" placeholder="Password" id="password" required>
+		<label for="username">Username:</label>
+		<input type="text" placeholder="Username" id="username" required><br><br>
 
-		<label>
-			<input type="checkbox" id="checkbox"> Remember me
-		</label>
-		<br><br>
+		<label for="password">Password:</label>
+		<input type="password" placeholder="Password" id="password" required><br><br>
 
-		<button type="submit" id="submit">Submit</button>
+		<label for="checkbox">Remember me:</label>
+		<input type="checkbox" id="checkbox"><br><br>
+
+		<input type="submit" id="submit" value="Submit">
 	</form>
 
 	<!-- Hidden button for existing user login -->
@@ -29,7 +30,7 @@
 		const rememberMe = document.getElementById("checkbox");
 		const existingBtn = document.getElementById("existing");
 
-		// Check if credentials exist in localStorage
+		// Show "existing user" if credentials exist
 		window.onload = () => {
 			if (localStorage.getItem("username") && localStorage.getItem("password")) {
 				existingBtn.style.display = "block";
@@ -38,7 +39,7 @@
 
 		// Handle form submission
 		form.addEventListener("submit", (e) => {
-			e.preventDefault(); // Prevent page refresh
+			e.preventDefault();
 			const username = usernameInput.value;
 			const password = passwordInput.value;
 
@@ -52,15 +53,11 @@
 				localStorage.removeItem("password");
 			}
 
-			// Show "existing user" button if credentials are saved
-			if (localStorage.getItem("username")) {
-				existingBtn.style.display = "block";
-			} else {
-				existingBtn.style.display = "none";
-			}
+			// Toggle visibility of existing user button
+			existingBtn.style.display = localStorage.getItem("username") ? "block" : "none";
 		});
 
-		// Handle existing user login
+		// Existing user login
 		existingBtn.addEventListener("click", () => {
 			const savedUsername = localStorage.getItem("username");
 			alert(`Logged in as ${savedUsername}`);
